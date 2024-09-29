@@ -1,4 +1,7 @@
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 name: Python application
 
 on:
@@ -24,4 +27,8 @@ jobs:
       run: |
         make run &
         sleep 10
+<<<<<<< Updated upstream
         curl http://localhost:3000
+=======
+        curl http://localhost:3000
+>>>>>>> Stashed changes
