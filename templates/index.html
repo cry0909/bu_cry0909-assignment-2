@@ -60,6 +60,7 @@
         document.getElementById('step_kmeans').addEventListener('click', function() {
             if (converged) {
                 alert("KMeans has already converged. Please reset to run again.");
+                
                 return;
             }
 
@@ -67,7 +68,7 @@
             const k = parseInt(document.getElementById('clusters').value, 10);
 
             if (method === 'manual' && manualCentroids.length === 0) {
-                alert("Please select centroids by clicking on the plot.");
+                alert("Select centroids by clicking on the plot.");
                 return;
             }
 

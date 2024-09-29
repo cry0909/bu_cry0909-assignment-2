@@ -44,18 +44,20 @@ class KMeans:
         return new_centroids
 
     def step(self, data):
-        """Performs one iteration of the KMeans algorithm."""
+
         labels = self.assign_clusters(data)
         new_centroids = self.update_centroids(data, labels)
+
         return new_centroids, labels
 
     def fit(self, data, max_iters=100, tol=1e-4):
-        """Runs the KMeans algorithm until convergence."""
         self.initialize_centroids(data)
         for iteration in range(max_iters):
             labels = self.assign_clusters(data)
             new_centroids = self.update_centroids(data, labels)
+
             centroid_shift = np.linalg.norm(self.centroids - new_centroids, axis=1)
+
             if np.all(centroid_shift < tol):
                 return self.centroids, labels, True
             self.centroids = new_centroids
@@ -70,6 +72,7 @@ def index():
 @app.route('/get_new_data', methods=['POST'])
 def get_new_data():
     data = np.random.rand(100, 2)
+
     return jsonify(data.tolist())
 
 
@@ -83,13 +86,14 @@ def kmeans_step_by_step():
 
     kmeans = KMeans(k=k, init_method=method)
 
-    # Initialize centroids on the first iteration
+    
     if 'centroids' in content and len(content['centroids']) > 0:
         kmeans.centroids = np.array(content['centroids'])
-    elif iteration == 0:
-        kmeans.initialize_centroids(data)  # Initialize centroids at the first step
 
-    # Perform one step of KMeans (only one iteration)
+    elif iteration == 0:
+        kmeans.initialize_centroids(data)  
+
+    
     new_centroids, labels = kmeans.step(data)
 
     # Check if centroids have converged (no change)
@@ -100,9 +104,9 @@ def kmeans_step_by_step():
     kmeans.centroids = new_centroids
 
     return jsonify({
-        'centroids': new_centroids.tolist(),  # Convert NumPy array to list
-        'labels': labels.tolist(),  # Convert NumPy array to list
-        'converged': converged  # Ensure boolean is serializable
+        'centroids': new_centroids.tolist(), 
+        'labels': labels.tolist(),  
+        'converged': converged  
     })
 
 
@@ -119,13 +123,14 @@ def run_to_converge():
     if 'centroids' in content and len(content['centroids']) > 0:
         kmeans.centroids = np.array(content['centroids'])
 
-    # Run KMeans until convergence
+   
     centroids, labels, converged = kmeans.fit(data)
+
 
     return jsonify({
         'centroids': centroids.tolist(),
         'labels': labels.tolist(),
-        'converged': converged  # Now we check for convergence
+        'converged': converged 
     })
 
 
